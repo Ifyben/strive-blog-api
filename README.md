@@ -1,1 +1,2 @@
-# strive-blog-api
+# new-blog-api-project
+ 
