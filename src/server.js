@@ -3,7 +3,7 @@ import cors from "cors"
 import listEndpoints from "express-list-endpoints"
 import authorsRouter from "./authors/index.js"
 import blogsRouter from "./blogs/index.js"
-import { notFound, forbidden, catchAllErrorHandler } from "./errorHandlers.js"
+import {  errorHandler } from "./errorHandlers.js"
 import path,{dirname} from "path";
 import { fileURLToPath } from "url"
 
@@ -15,7 +15,22 @@ const server = express();
 
 const { PORT } = process.env;
 
-server.use(cors());
+
+const whiteList = ["http://localhost:3000"];
+const corsOptions = {
+   origin:(origin, callback) => {
+      if(whiteList.some(allowedUrl => allowedUrl === origin)) {
+         callback(null, true);
+      }
+      else {
+         const error = new Error("Not allowed by cors!");
+         error.status = 403;
+         callback(error);
+      }
+   },
+};
+
+server.use(cors(corsOptions));
 
 server.use(express.json());
 
@@ -25,11 +40,7 @@ server.use("/authors", authorsRouter);
 
 server.use("/blogs", blogsRouter);
 
-server.use(notFound);
-
-server.use(forbidden);
-
-server.use(catchAllErrorHandler);
+server.use(errorHandler);
 
 console.log(listEndpoints(server));
 
