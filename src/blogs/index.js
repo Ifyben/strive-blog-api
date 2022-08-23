@@ -205,7 +205,7 @@ router.put("/:id/comment", checkCommentSchema, checkValidationResult, async (req
 });
 
 
-router.put("/:id/cover", parseFile.single("cover"), uploadFile, async (req, res, next) => {
+router.put("/:id/cover", parseFile.single("cover"), async (req, res, next) => {
   try {
       
       const fileAsBuffer = fs.readFileSync(blogsFilePath);
@@ -222,7 +222,7 @@ router.put("/:id/cover", parseFile.single("cover"), uploadFile, async (req, res,
           const previousBlogData = fileAsJSONArray[blogIndex];
           const changedBlog = {
               ...previousBlogData,
-              cover: req.file,
+              cover: req.file.path,
               updatedAt: new Date(),
               id: req.params.id,
           };

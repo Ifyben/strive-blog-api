@@ -101,30 +101,29 @@ router.delete("/:id", async (req, res, next) => {
 // update author
 router.put("/:id/avatar", parseFile.single("avatar"), async (req, res, next) => {
     try {
-      res.send(req.file);
         
-        //const fileAsBuffer = fs.readFileSync(authorsFilePath);
-        //const fileAsString = fileAsBuffer.toString();
-        //let fileAsJSONArray = JSON.parse(fileAsString);
-        //const authorIndex = fileAsJSONArray.findIndex(
-            //(author) => author.id === req.params.id
-            //);
-            //if(!authorIndex == -1) {
-              //res
-                //.status(404)
-                //.send({ message: `Author with ${req.params.id} is not found!`});
-            //}
-            //const previousAuthorData = fileAsJSONArray[authorIndex];
-            //const changedAuthor = {
-                //...previousAuthorData,
-                //avatar: req.file,
-                //updatedAt: new Date(),
-                //id: req.params.id,
-            //};
-            //fileAsJSONArray[authorIndex] = changedAuthor;
+        const fileAsBuffer = fs.readFileSync(authorsFilePath);
+        const fileAsString = fileAsBuffer.toString();
+        let fileAsJSONArray = JSON.parse(fileAsString);
+        const authorIndex = fileAsJSONArray.findIndex(
+            (author) => author.id === req.params.id
+            );
+            if(!authorIndex == -1) {
+              res
+                .status(404)
+                .send({ message: `Author with ${req.params.id} is not found!`});
+            }
+            const previousAuthorData = fileAsJSONArray[authorIndex];
+            const changedAuthor = {
+                ...previousAuthorData,
+                avatar: req.file.path,
+                updatedAt: new Date(),
+                id: req.params.id,
+            };
+            fileAsJSONArray[authorIndex] = changedAuthor;
 
-            //fs.writeFileSync(authorsFilePath, JSON.stringify(fileAsJSONArray));
-            //res.send(changedAuthor);
+            fs.writeFileSync(authorsFilePath, JSON.stringify(fileAsJSONArray));
+            res.send(changedAuthor);
 
     } catch (error) {
       res.send(500).send({ message: error.message});
