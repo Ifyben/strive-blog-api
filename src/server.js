@@ -51,3 +51,6 @@ console.table(listEndpoints(server));
 server.on("error", (error) => 
    console.log(`❌ server is not running due to : ${error}`)
    );
+
+
+

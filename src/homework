@@ -166,4 +166,65 @@
 ## Extra Features
 ## BE: Comments edit and delete
 ## FE: Post new comment on a blog post
+
+
+
+
+
+## *************************************** Day 7 *************************************************
+
+## Complete all the homeworks from last week (including extras 😜), then deploy it on cloud.
+
+
+## ☁️ CLOUD
+## We want to make applications available for the general public and production ready 🚗⚡
+
+
+
+## Deploy everything on HEROKU and VERCEL, with CLOUDINARY as CDN
+
+
+
+## ⚠️ If you have troubles with running on heroku remind to configure start scripts in package.json
+
+## ⚠️ ⚠️ Remind to use environment variables both locally and remotely
+
+## ⚠️ ⚠️ ⚠️ Configure CORS properly to make them work together.
+
+
+
+
+
+
+## ************************************ Day 8 ****************************************************
+
+## BACKEND
+## Create an endpoint dedicated to export all the relevant data of a blog post into a well styled downloadable PDF ## file.
+ 
+
+## [EXTRA] add blogpost image to PDF too
+ 
+
+## You can find an example blog post as pdf in attachment.
+ 
+
+## FRONTEND
+## Create an anchor tag on single blog post page to permit PDF download
+ 
+
+
+
+## ********************************* Day 9 ****************************************
+
+ ## BACKEND
+## Create an endpoint dedicated to export the list of all the authors as a CSV file
+ 
+
+## Send an Email to the author when a new blog post is being created
+ 
+
+## [Extra] Add as the email attachment a pdf version of the newly created blog post
+ 
+
+## [Extra] Write proper API documentation by using Swagger (or Postman Docs)
  
