@@ -22,6 +22,21 @@ router.get("/", async (req, res, next) => {
     }
 });
 
+
+// get all authors export as csv 
+router.get("/", async (req, res, next) => {
+  try {  
+    const fileAsBuffer = fs.readFileSync(authorsFilePath);
+    const fileAsString = fileAsBuffer.toString();
+    const fileAsJSON = JSON.parse(fileAsString);
+    res.send(fileAsJSON);
+  } catch (error) {
+    res.send(500).send({ message: error.message });  
+  }
+});
+
+
+
 // get single author
 router.get("/:id", async (req, res, next) => {
     try {
