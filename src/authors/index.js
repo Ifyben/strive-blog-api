@@ -3,7 +3,8 @@ import fs from "fs"
 import uniqid from "uniqid"
 import path,{dirname} from "path";
 import { fileURLToPath } from "url"
-import { parseFile, uploadFile } from "../utils/upload/index.js";
+import { parseFile } from "../utils/upload/index.js";
+import { generateCSV } from "../utils/csv/index.js"
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -32,7 +33,10 @@ router.get("/csv", async (req, res, next) => {
     if (fileAsJSON.length > 0) {
       const [first, ...rest] = fileAsJSON;
       const fields = Object.keys(first);
-      res.send (fields);
+      const csvBuffer = generateCSV(fields, fileAsJSON)
+      res.setHeader('Contenet-Type', 'text/csv');
+      res.setHeader('Content-Disposition', 'attachment, filename="authors.csv"')
+      res.download (csvBuffer);
     } else {
       res.status(404).send({ message: "There is no one here."});
     }
