@@ -24,12 +24,18 @@ router.get("/", async (req, res, next) => {
 
 
 // get all authors export as csv 
-router.get("/", async (req, res, next) => {
+router.get("/csv", async (req, res, next) => {
   try {  
     const fileAsBuffer = fs.readFileSync(authorsFilePath);
     const fileAsString = fileAsBuffer.toString();
     const fileAsJSON = JSON.parse(fileAsString);
-    res.send(fileAsJSON);
+    if (fileAsJSON.length > 0) {
+      const [first, ...rest] = fileAsJSON;
+      const fields = Object.keys(first);
+      res.send (fields);
+    } else {
+      res.status(404).send({ message: "There is no one here."});
+    }
   } catch (error) {
     res.send(500).send({ message: error.message });  
   }
