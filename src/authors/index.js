@@ -36,12 +36,12 @@ router.get("/csv", async (req, res, next) => {
       const csvBuffer = generateCSV(fields, fileAsJSON)
       res.setHeader('Contenet-Type', 'text/csv');
       res.setHeader('Content-Disposition', 'attachment, filename="authors.csv"')
-      res.download (csvBuffer);
+      res.send(csvBuffer);
     } else {
       res.status(404).send({ message: "There is no one here."});
     }
   } catch (error) {
-    res.send(500).send({ message: error.message });  
+    res.sendStatus(500).send({ message: error.message });  
   }
 });
 
