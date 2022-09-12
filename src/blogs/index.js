@@ -5,6 +5,7 @@ import path,{dirname } from "path";
 import { fileURLToPath } from "url"
 import { parseFile, uploadFile } from "../utils/upload/index.js";
 import { checkBlogPostSchema, checkCommentSchema, checkSearchSchema, checkValidationResult } from "./validation.js";
+import { sendBlogPostMail } from "../utils/mail/template/index.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -112,6 +113,7 @@ checkBlogPostSchema,
 checkValidationResult, 
 async (req, res, next) => {
     try {
+        const {author} = req.body
         const blog = {
             id: uniqid(),
             ...req.body,
@@ -128,6 +130,11 @@ async (req, res, next) => {
         fileAsJSONArray.push(blog);
 
         fs.writeFileSync(blogsFilePath, JSON.stringify(fileAsJSONArray));
+        await sendBlogPostMail({ 
+          to:author.email, 
+          title:blog.title, 
+          link:`http:\\localhost:3000/${blog.id}` 
+        })
 
         res.send(blog)
     }   catch (error) {

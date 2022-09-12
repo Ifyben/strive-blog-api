@@ -1,4 +1,5 @@
 import sgMail from '@sendgrid/mail';
+import { BlogPostMailTemplate } from '../template/blogPost.js';
 
 const { SENDGRID_API_KEY, SENDGRID_EMAIL } = process.env;
 
