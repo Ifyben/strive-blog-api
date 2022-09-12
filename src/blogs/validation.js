@@ -32,6 +32,12 @@ const schema = {
             errorMessage:'author.avatar validation failed, type must be string'
         },
     },
+    "author.email": {
+        in:["body"],
+        isEmail:{
+            errorMessage:'author.email validation failed, type must be email'
+        },
+    },
     "readTime.value": {
         in:["body"],
         isNumeric:{
